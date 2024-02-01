@@ -1,0 +1,36 @@
+
+put notes here if theres something you think might be important to remember
+
+
+
+
+insight API:
+
+pressure returned in pascal
+bar = pascal * 10**-5 || pascal / 10**5 ('**'operator for exponentiation) ||
+psi = pascal * 0.000145038 || pascal / 6894.76 
+
+Temperature returned in ℃
+℉ = (celsius * 9/5) + 32
+
+
+
+
+
+
+const apiUrl = 'https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0';
+
+// Make a GET request
+fetch(apiUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
