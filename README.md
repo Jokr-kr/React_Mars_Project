@@ -1,5 +1,5 @@
 # Project-M
-This is a project that intends to get weather information from mars and make a graph to show the changes over some time(To be determined)
+This is a project that intends to get weather information from mars and make a graph to show some changes over some time(To be determined)
 
 
 ---------------------------------------------------------
