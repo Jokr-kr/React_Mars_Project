@@ -55,8 +55,11 @@ What did you learn while building this project? What challenges did you face and
 
 - **1.** First thing i encountered whas how to make a reasonable and professional looking README file
 - (solution)got help from readme.so and some minor inputs from Chat gpt to get the syntax right
-- **2.** 
-- **3.** 
+- **2.** learning about node,react,axios,express,MySQL and how to use api's all in a short period of time,
+  (used Linkedin Learning, some youtube, friends and some questions was sent to chat gpt to get a deeper understanding about certain concepts
+  this whole learning period lasted two weeks before i could start writing code oin this project)
+- **3.** ran an npm update latest, got a mesage about vulnerabilities, spent some time figuring out what that meant and how to deal with it.
+  (learned that not all issues with vulnerabilities are important to solve)
 - **4.** 
 - **5.** 
 
