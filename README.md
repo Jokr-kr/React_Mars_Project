@@ -1,4 +1,4 @@
-# Project-M
+# React_Mars_project
 This is a project that intends to get weather information from mars and make a graph to show some changes over some time(To be determined)
 
 
