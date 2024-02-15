@@ -1,23 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import Showimage from './components/showImage';
 
-function test()
+function Test()
 {
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>Hello,</h1>
-      <p>If you see this message, the test is working!</p>
+      <h1>Hello!</h1>
+      <div></div>
+      <p>If you see this message, your test is working!</p>
     </div>
   );
 }
 
-export default test;
+export default Test;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    root.render(<test />)
+    <Test />
+    <Showimage />
   </React.StrictMode>
 );
 

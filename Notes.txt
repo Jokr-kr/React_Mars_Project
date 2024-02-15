@@ -2,35 +2,41 @@
 put notes here if theres something you think might be important to remember
 
 
+api:
+apod = a picture of the day
+insight= forecast from mars
+opengraph= reads pictures
 
-
-insight API:
-
-pressure returned in pascal
+technical
+(insight) pressure returned in pascal
 bar = pascal * 10**-5 || pascal / 10**5 ('**'operator for exponentiation) ||
 psi = pascal * 0.000145038 || pascal / 6894.76 
 
-Temperature returned in ℃
-℉ = (celsius * 9/5) + 32
+(insight) Temperature returned in ℃
+to get ℉:
+℉ = (celsius * 9/5) + 32         
+alternatively since 9/5 == 1.8
+℉ = (celsius * 1.8) + 32
 
 
 
 
-
-
-const apiUrl = 'https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0';
-
-// Make a GET request
-fetch(apiUrl)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log(data);
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY
+StatusCode        : 200                                                                                                                                                                                     
+StatusDescription : OK                                                                                                                                                                                      
+Content           : {"copyright":"Steve Crouch","date":"2024-02-15","explanation":"Shiny NGC 253 is one of the brightest spiral galaxies visible, and also one of the dustiest.  Some call it the Silver Co 
+                    in Galaxy for its...
+RawContent        : HTTP/1.1 200 OK
+                    Connection: keep-alive
+                    Vary: Accept-Encoding,Accept-Encoding
+                    Access-Control-Allow-Origin: *
+                    Access-Control-Expose-Headers: X-RateLimit-Limit, X-RateLimit-Remaining
+                    Age: 0
+                    Strict-...
+Forms             : {}
+Headers           : {[Connection, keep-alive], [Vary, Accept-Encoding,Accept-Encoding], [Access-Control-Allow-Origin, *], [Access-Control-Expose-Headers, X-RateLimit-Limit, X-RateLimit-Remaining]...}     
+Images            : {}
+InputFields       : {}
+Links             : {}
+ParsedHtml        : mshtml.HTMLDocumentClass
+RawContentLength  : 1331
