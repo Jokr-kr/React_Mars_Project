@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Showimage from './components/showImage';
-
+import { CustomLabel, NamedLabel } from './components/Label';
 function Test()
 {
   return (
@@ -21,6 +21,9 @@ root.render(
   <React.StrictMode>
     <Test />
     <Showimage />
+    <CustomLabel value="Custom Label test 1" />
+    <CustomLabel value="Custom Label test 2" height='120px' width='120px' />
+    <NamedLabel value="Named Label test" className="standard" />
   </React.StrictMode>
 );
 

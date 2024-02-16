@@ -24,8 +24,12 @@ export default function Showimage({ imagepath, Alt })
 
 /*
 how to use this component:
-<Showimage 
-imagepath = "path/to/your/image.jpg" 
-Alt = "A description of the image" (not strictly necessary to add)
-/>
+<Showimage imagepath = "path/to/your/image.jpg" 
+Alt = "A description of the image"/>
+
+or
+
+<Showimage imagepath = "path/to/your/image.jpg"/>
+
+Alt is not strictly necessary.
 */
