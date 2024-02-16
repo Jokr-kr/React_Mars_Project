@@ -22,7 +22,7 @@ root.render(
     <Test />
     <Showimage />
     <CustomLabel value="Custom Label test 1" />
-    <CustomLabel value="Custom Label test 2" height='120px' width='120px' />
+    <CustomLabel value="Custom Label test 2" height='120px' width='120px' fontSize='xx-large' />
     <NamedLabel value="Named Label test" className="standard" />
   </React.StrictMode>
 );
