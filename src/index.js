@@ -26,6 +26,3 @@ root.render(
     <NamedLabel value="Named Label test" className="standard" />
   </React.StrictMode>
 );
-
-
-

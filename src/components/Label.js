@@ -19,5 +19,5 @@ ways to use NamedLabel
 
 <NamedLabel value="some text" className="the wanted css class" />
 
-
 */
+
