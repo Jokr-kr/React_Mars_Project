@@ -17,8 +17,7 @@ to get ℉:
 ℉ = (celsius * 9/5) + 32         
 alternatively since 9/5 == 1.8
 ℉ = (celsius * 1.8) + 32
-
-
+secure stuff gets stored in an ".env file"
 
 
 https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY
