@@ -60,8 +60,9 @@ What did you learn while building this project? What challenges did you face and
   this whole learning period lasted two weeks before i could start writing code in this project)
 - **3.** ran an npm update latest, got a mesage about vulnerabilities, spent some time figuring out what that meant and how to deal with it.
   (learned that not all issues with vulnerabilities are important to solve)
-- **4.** 
-- **5.** 
+- **4.** started to set up server, realized i need to create a database, tried making it with MySQL, didn't understand and got stuck in tutorial hell for about 5 days,
+  (im now a "master" of MySQL, back to server work)
+- **5.**
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
