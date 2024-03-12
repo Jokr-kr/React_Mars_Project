@@ -1,4 +1,4 @@
-const MySQL_db = require('./DB_Connect')
+const MySQL_db = require('./Connect')
 function TestDB(req, res)
 {
     MySQL_db.query('SELECT 1 + 1 AS solution', (err, results) =>

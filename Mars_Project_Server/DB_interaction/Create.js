@@ -1,4 +1,4 @@
-const MySQL_db = require('./DB_Connect');
+const MySQL_db = require('./Connect');
 
 function createTable()
 {
