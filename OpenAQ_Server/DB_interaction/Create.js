@@ -10,7 +10,8 @@ function createTable()
         )
     `;
 
-    MySQL_db.query(createTableQuery, (err, results) =>
+    // eslint-disable-next-line no-unused-vars
+    MySQL_db.query(createTableQuery, (err, _results) =>
     {
         if (err)
         {

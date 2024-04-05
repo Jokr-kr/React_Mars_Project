@@ -1,6 +1,5 @@
-# React_Mars_project
-This is a project that intends to get weather information from mars and make a graph to show some changes over some time(To be determined)
-
+# Local AirQuality 
+This is a project that intends to get Airquality data and make a graph to show thechanges over time, it will also compare several locations.
 
 ---------------------------------------------------------
 ## Tech Stack
@@ -12,7 +11,9 @@ This is a project that intends to get weather information from mars and make a g
 ### Backend
 - **Runtime:** Node.js
 - **Framework:** Express
+- **HTTP Client:** Axios
 - **Database:** MySQL
+
 
 ### Version Control
 - **Git:** [GitHub](https://github.com/kristoffer-Johnsen/Project-M/)
@@ -26,22 +27,8 @@ This is a project that intends to get weather information from mars and make a g
 Examples the real APIs gets added as i get to them
 
 #### Get all items
-```http
-  GET /api/items
-```
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
 
 #### Get item
-```http
-  GET /api/items/${id}
-```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
-#### add(num1, num2)
-Takes two numbers and returns the sum.
 
 ---------------------------------------------------------
 ## Acknowledgements
@@ -62,7 +49,10 @@ What did you learn while building this project? What challenges did you face and
   (learned that not all issues with vulnerabilities are important to solve)
 - **4.** started to set up server, realized i need to create a database, tried making it with MySQL, didn't understand and got stuck in tutorial hell for about 5 days,
   (im now a "master" of MySQL, back to server work)
-- **5.**
+- **5.** i intended to use the insight api from Nasa, turns out the api would give little to no data.
+  ( i decided to pivot and go for an airquality api called OpenAQ,)
+- **6.** 
+- **7.** 
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
