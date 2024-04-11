@@ -3,13 +3,13 @@ const mysql = require('mysql');
 require('dotenv').config();
 const MySQL_Username = process.env.MYSQL_USERNAME;
 const MySQL_Password = process.env.MYSQL_PASSWORD;
-const Database_Name = process.env.MYSQL_DB_NAME
+const Database_connection = process.env.MYSQL_DB_CONNECTION;
 
 const Connect = mysql.createConnection({
-    host: 'localhost',
+    host: LOCALHOST,
     user: MySQL_Username,
     password: MySQL_Password,
-    database: Database_Name
+    database: Database_connection
 });
 
 Connect.connect((error) =>

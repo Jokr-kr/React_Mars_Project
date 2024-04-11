@@ -33,7 +33,7 @@ Examples the real APIs gets added as i get to them
 ---------------------------------------------------------
 ## Acknowledgements
 * [Readme.so](https://readme.so/)
-* [Chat GPT](https://chat.openai.com/auth/login)
+* [Chat GPT](https://chat.openai.com)
 
 ---------------------------------------------------------
 ## Lessons Learned

@@ -31,6 +31,7 @@ module.exports = {
     },
     "globals": {
         "process": "readonly",
+        "LOCALHOST": "readonly"
     }
 
 }
