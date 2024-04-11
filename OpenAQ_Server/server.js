@@ -12,17 +12,11 @@ app.get('/', (req, res) =>
 });
 
 
-//Database
+//Database interactions
 const DB = require('./DB_interaction/DB');
 DB.Connect;
 app.get('/testdb', DB.TestDB);
-app.get('/create', DB.CreateTable);
-app.get('/delete', DB.DeleteTable);
 
-
-//Insight API
-const Fetch_Insight = require('./API/Insight/Insight');
-app.get('/insight/update', Fetch_Insight());
 
 
 app.listen(port, () =>
