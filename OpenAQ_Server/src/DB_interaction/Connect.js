@@ -21,7 +21,7 @@ Connect.connect((error) =>
         console.error('Error connecting: ' + error.stack);
         return;
     }
-    console.log('Connected as id ' + Connect.threadId);
+    console.log('Connected to database ' + Connect.threadId);
 });
 
 module.exports = Connect;
