@@ -1,6 +1,6 @@
 const API = (app) =>
 {
-    app.API('/contact')
+    app.route('/contact')
         .get((req, res) =>
             res.send('Get request succesfull')
         )
@@ -9,8 +9,7 @@ const API = (app) =>
             res.send('Post request succesfull')
         )
 
-
-    app.API('/contact/:contactId')
+    app.route('/contact/:contactId')
         .put((req, res) =>
             res.send('Put request succesfull')
         )
@@ -19,4 +18,4 @@ const API = (app) =>
             res.send('Delete request succesfull')
         )
 }
-module.export = API;
+module.exports = API;
