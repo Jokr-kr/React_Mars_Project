@@ -1,27 +1,34 @@
 
-const mysql = require('mysql');
-require('dotenv').config();
-const HOST = process.env.HOST;
-const MySQL_Username = process.env.MYSQL_USERNAME;
-const MySQL_Password = process.env.MYSQL_PASSWORD;
-const Database_connection = process.env.MYSQL_CONNECTION;
-
-
-const Connect = mysql.createConnection({
-    host: HOST,
-    user: MySQL_Username,
-    password: MySQL_Password,
-    database: Database_connection
-});
+import mysql from 'mysql2';
+import { config } from 'dotenv';
+config();
+const Connect = mysql.createConnection(
+    {
+        host: process.env.HOST,
+        user: process.env.MYSQL_USERNAME,
+        password: process.env.MYSQL_PASSWORD,
+        database: process.env.MYSQL_CONNECTION
+    }
+);
 
 Connect.connect((error) =>
 {
     if (error)
     {
         console.error('Error connecting: ' + error.stack);
-        return;
+        process.exit(1);
     }
     console.log('Connected to database ' + Connect.threadId);
 });
+// errors after initial connection
+Connect.on('error', (err) =>
+{
+    console.error('Database connection error:', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST')
+    {
+        console.log("database connection lost");
+    }
+});
 
-module.exports = Connect;
+export default Connect;
+

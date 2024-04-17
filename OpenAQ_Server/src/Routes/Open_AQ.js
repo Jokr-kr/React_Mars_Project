@@ -1,8 +1,16 @@
 const API = (app) =>
 {
     app.route('/contact')
-        .get((req, res) =>
+        .get((req, res, next) =>
+        {
+            //middleware test
+            console.log(`request from: ${req.originalUrl}`);
+            console.log(`request type:${req.method}`);
+            next();
+        }, (req, res, next) =>
+        {
             res.send('Get request succesfull')
+        }
         )
 
         .post((req, res) =>

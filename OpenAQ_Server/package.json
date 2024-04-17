@@ -2,9 +2,10 @@
   "name": "node_server",
   "version": "1.0.0",
   "description": "server to host Mars-project",
+  "type": "module",
   "main": "server.js",
   "scripts": {
-    "test": "test"
+    "dev": "nodemon server.js"
   },
   "keywords": [
     "nodejs",

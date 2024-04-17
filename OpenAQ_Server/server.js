@@ -1,14 +1,17 @@
 //notes are just to keep my self oriented and for Learning
+import { config } from 'dotenv';
+config();
 
-const express = require('express');
+import express from 'express';
 const app = express();
-const port = process.env.PORT;
-const API = require('./src/Routes/Open_AQ.js');
+const port = process.env.PORT || 3000;
 
+//Database connection
+import './src/DB/Connect.js';
+//API RESTFULL
+import API from './src/Routes/Open_AQ.js';
 API(app);
 
-//Database
-const DB = require('./src/DB/Connect.js');
 
 app.get('/', (req, res) =>
 {
@@ -19,5 +22,29 @@ app.listen(port, () =>
 {
     console.log(`Server running on http://localhost:${port}`);
 });
+
+const Shutdown = () =>
+{
+    console.log('Shutting down...');
+    server.close(() =>
+    {
+        console.log('HTTP server closed.');
+
+        connection.end((err) =>
+        {
+            if (err)
+            {
+                console.error('Error closing the database connection', err);
+            } else
+            {
+                console.log('Database connection closed.');
+            }
+            process.exit(err ? 1 : 0);
+        });
+    });
+};
+
+process.on('SIGINT', Shutdown);
+process.on('SIGTERM', Shutdown);
 
 // OpenAQ //breezometer
