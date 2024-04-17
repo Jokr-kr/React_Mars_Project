@@ -18,4 +18,4 @@ const API = (app) =>
             res.send('Delete request succesfull')
         )
 }
-module.exports = API;
+export default API;

@@ -2,7 +2,7 @@
 
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 const API = require('./src/Routes/Open_AQ.js');
 
 API(app);
