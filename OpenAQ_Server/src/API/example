@@ -1,0 +1,83 @@
+{
+    "meta": {
+        "name": "openaq-api",
+        "license": "",
+        "website": "/",
+        "page": 1,
+        "limit": 10,
+        "found": 1
+    },
+    "results": [
+        {
+            "id": 10592,
+            "city": "Grenland",
+            "name": "Knarrdalstranda",
+            "entity": null,
+            "country": "NO",
+            "sources": null,
+            "isMobile": false,
+            "isAnalysis": null,
+            "parameters": [
+                {
+                    "id": 1,
+                    "unit": "µg/m³",
+                    "count": 4689,
+                    "average": 18.26470696376811,
+                    "lastValue": 47.734461,
+                    "parameter": "pm10",
+                    "displayName": "pm10 µg/m³",
+                    "lastUpdated": "2024-04-22T07:00:00+00:00",
+                    "parameterId": 1,
+                    "firstUpdated": "2022-10-04T18:00:00+00:00",
+                    "manufacturers": null
+                },
+                {
+                    "id": 5,
+                    "unit": "µg/m³",
+                    "count": 4689,
+                    "average": 5.67708602169982,
+                    "lastValue": 20.970761,
+                    "parameter": "no2",
+                    "displayName": "no2 µg/m³",
+                    "lastUpdated": "2024-04-22T07:00:00+00:00",
+                    "parameterId": 5,
+                    "firstUpdated": "2022-10-04T18:00:00+00:00",
+                    "manufacturers": null
+                },
+                {
+                    "id": 2,
+                    "unit": "µg/m³",
+                    "count": 4689,
+                    "average": 7.771590028985514,
+                    "lastValue": 9.977064,
+                    "parameter": "pm25",
+                    "displayName": "pm25 µg/m³",
+                    "lastUpdated": "2024-04-22T07:00:00+00:00",
+                    "parameterId": 2,
+                    "firstUpdated": "2022-10-04T18:00:00+00:00",
+                    "manufacturers": null
+                }
+            ],
+            "sensorType": null,
+            "coordinates": {
+                "latitude": 59.13353999946977,
+                "longitude": 9.6219000003252
+            },
+            "lastUpdated": "2024-04-22T07:00:00+00:00",
+            "firstUpdated": "2022-10-04T18:00:00+00:00",
+            "measurements": 14067,
+            "bounds": [
+                9.6219000003252,
+                59.13353999946977,
+                9.6219000003252,
+                59.13353999946977
+            ],
+            "manufacturers": [
+                {
+                    "modelName": "Government Monitor",
+                    "manufacturerName": "Unknown Governmental Organization"
+                }
+            ]
+        }
+    ]
+}

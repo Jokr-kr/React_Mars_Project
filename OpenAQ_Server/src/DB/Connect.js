@@ -1,34 +1,34 @@
-
-import mysql from 'mysql2';
+import mysql from 'mysql2/promise';
 import { config } from 'dotenv';
 config();
-const Connect = mysql.createConnection(
-    {
-        host: process.env.HOST,
-        user: process.env.MYSQL_USERNAME,
-        password: process.env.MYSQL_PASSWORD,
-        database: process.env.MYSQL_CONNECTION
-    }
-);
 
-Connect.connect((error) =>
+async function connectToDatabase()
 {
-    if (error)
+    try
     {
-        console.error('Error connecting: ' + error.stack);
+        const connection = await mysql.createConnection({
+            host: process.env.HOST,
+            user: process.env.MYSQL_USERNAME,
+            password: process.env.MYSQL_PASSWORD,
+            database: process.env.MYSQL_CONNECTION
+        });
+        console.log('Connected to database ' + connection.threadId);
+
+        //connection errors
+        connection.on('error', (err) =>
+        {
+            console.error('Database connection error:', err);
+            if (err.code === 'PROTOCOL_CONNECTION_LOST')
+            {
+                console.log('Database connection lost');
+            }
+        });
+        return connection;
+    } catch (error)
+    {
+        console.error('Error connecting to database:', error);
         process.exit(1);
     }
-    console.log('Connected to database ' + Connect.threadId);
-});
-// errors after initial connection
-Connect.on('error', (err) =>
-{
-    console.error('Database connection error:', err);
-    if (err.code === 'PROTOCOL_CONNECTION_LOST')
-    {
-        console.log("database connection lost");
-    }
-});
+}
 
-export default Connect;
-
+export default connectToDatabase;

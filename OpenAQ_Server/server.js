@@ -1,17 +1,17 @@
-//notes are just to keep my self oriented and for Learning
+//dotenv = your environment file which contains your usernarme, password, api keys etc.)
 import { config } from 'dotenv';
 config();
-
 import express from 'express';
 const app = express();
 const port = process.env.PORT || 3000;
 
-//Database connection
-import './src/DB/Connect.js';
-//API RESTFULL
-import API from './src/Routes/Open_AQ.js';
-API(app);
+//Database
+import { initialize } from './src/API/initialize.js';
+initialize();
 
+//API
+import routes from './src/Routes/Routes.js';
+routes(app);
 
 app.get('/', (req, res) =>
 {
@@ -28,7 +28,7 @@ const Shutdown = () =>
     console.log('Shutting down...');
     server.close(() =>
     {
-        console.log('HTTP server closed.');
+        console.log('server closed.');
 
         connection.end((err) =>
         {
