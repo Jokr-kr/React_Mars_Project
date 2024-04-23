@@ -1,14 +1,14 @@
-import add2DB from './DataInsert.js'
+import add2Db from './DataInsert.js'
 export default function processData(data, res)
 {
     const parameters = data.results[0].parameters;
-    var DateTime = data.results[0].lastUpdated;
-    var location_id = data.results[0].id;
+    var dateTime = data.results[0].lastUpdated;
+    var locationId = data.results[0].id;
     var pm10 = parameters[0].lastValue ? parameters[0].lastValue : null;
     var no2 = parameters[1].lastValue ? parameters[1].lastValue : null;
     var pm25 = parameters[2].lastValue ? parameters[2].lastValue : null;
 
-    add2DB(DateTime, location_id, pm10, pm25, no2, res)
+    add2Db(dateTime, locationId, pm10, pm25, no2, res)
 }
 
 /*   

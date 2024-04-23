@@ -29,7 +29,6 @@ const Shutdown = () =>
     server.close(() =>
     {
         console.log('server closed.');
-
         connection.end((err) =>
         {
             if (err)

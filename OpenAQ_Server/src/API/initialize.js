@@ -1,8 +1,8 @@
-import Connect from '../DB/Connect.js';
+import connect from '../DB/Connect.js';
 export async function initialize()
 {
-    console.log(typeof Connect)
-    const connection = await Connect();
+    console.log(typeof connect)
+    const connection = await connect();
     try
     {
         await connection.query(`
