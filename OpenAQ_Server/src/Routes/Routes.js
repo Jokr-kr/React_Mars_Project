@@ -1,27 +1,30 @@
+import DataFill from "../API/DataFill.js";
 import updatedata from "../API/DataGet.js";
+import test from "./test.js";
 const route = (app) =>
 {
     app.route('/Data')
         .get((req, res) =>
         {
             res.send('Get request succesfull')
-        }
-        )
+        })
 
         .post((req, res) =>
         {
             updatedata(req, res);
-        }
-        )
+        })
 
-    app.route('/contact/:contactId')
-        .put((req, res) =>
-            res.send('Put request succesfull')
-        )
+    app.route('/fillDatabase')
+        .get((req, res) =>
+        {
+            DataFill(req, res);
+        })
 
         .delete((req, res) =>
-            res.send('Delete request succesfull')
-        )
+        {
+            test(res)
+            console.log('test complete')
+        })
 }
 export default route;
 
