@@ -21,7 +21,7 @@ async function fillInnData(req, res)
         for (const parameter of parameters)
         {
             console.log(`Starting fetch for ${parameter}`);
-            dataStorage[parameter] = await fetchData(parameter, fromTime, limiter, pool);
+            dataStorage[parameter] = await fetchData(parameter, fromTime, limiter);
             console.log(`Completed fetch for ${parameter}`);
             //if the response has data its inserted into the database
             if (dataStorage[parameter] && dataStorage[parameter].length)

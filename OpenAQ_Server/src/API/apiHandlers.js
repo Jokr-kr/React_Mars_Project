@@ -1,7 +1,7 @@
 import axios from 'axios';
 import LatestFullHour from '../Utility/LatestHour.js';
 
-export async function fetchData(parameter, fromTime, rateLimiter, pool)
+export async function fetchData(parameter, fromTime, rateLimiter)
 {
     //setting the variables needed for the API request
     const Location_id = process.env.LOCATION_ID;
