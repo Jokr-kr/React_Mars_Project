@@ -1,18 +1,16 @@
-
-import connect from "./Connect.js";
-
-export default async function latestEntry()
+export default async function latestEntry(pool)
 {
-    const connection = await connect();
-    var datetime = null;
+    let datetime = null;
     try
     {
+        const connection = await pool.getConnection();
         const [rows] = await connection.query(`
-                SELECT DATE_FORMAT(datetime, '%Y-%m-%d %H:%i:%s') AS latestDatetime
-                FROM measurements
-                ORDER BY datetime DESC
-                LIMIT 1;
-            `);
+            SELECT DATE_FORMAT(datetime, '%Y-%m-%d %H:%i:%s') AS latestDatetime
+            FROM measurements
+            ORDER BY datetime DESC
+            LIMIT 1;
+        `);
+        connection.release();
         if (rows.length > 0)
         {
             datetime = rows[0].latestDatetime;
@@ -20,15 +18,11 @@ export default async function latestEntry()
         } else
         {
             console.log("No entries found in the database.");
-            datetime = null;
         }
     } catch (error)
     {
         console.error("Database query error:", error);
         throw new Error("Failed to retrieve the latest datetime");
-    } finally
-    {
-        await connection.end();
-        return datetime;
     }
+    return datetime;
 }

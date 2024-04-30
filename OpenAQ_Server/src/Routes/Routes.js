@@ -1,29 +1,26 @@
-import DataFill from "../API/DataFill.js";
-import updatedata from "../API/DataGet.js";
-import test from "./test.js";
+import fillInnData from "../API/DataFill.js";
 const route = (app) =>
 {
     app.route('/Data')
-        .get((req, res) =>
+        .put((req, res) =>
         {
-            res.send('Get request succesfull')
+            fillInnData(req, res);
         })
 
-        .post((req, res) =>
-        {
-            updatedata(req, res);
-        })
-
-    app.route('/fillDatabase')
         .get((req, res) =>
         {
-            DataFill(req, res);
+            res.send("currently nothing to get")
+        })
+
+    app.route('/somethingElse')
+        .get((req, res) =>
+        {
+            res.send("nothing here")
         })
 
         .delete((req, res) =>
         {
-            test(res)
-            console.log('test complete')
+            res.send("not yet implemented")
         })
 }
 export default route;

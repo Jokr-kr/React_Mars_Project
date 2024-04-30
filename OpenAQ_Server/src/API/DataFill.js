@@ -1,53 +1,40 @@
-import axios from 'axios';
-import latestEntry from '../DB/latestEntry.js';
-import LatestFullHour from '../Utility/LatestHour.js'
-import firstMeasurement from './FirstMeasurement.js'
-import { config } from 'dotenv'
+import fs from 'fs';
+import { config } from 'dotenv';
+import { insertMeasurements, connectToDatabase, latestEntry } from '../DB/dataInsert.js'
+import { fetchDataForParameter } from './apiHandlers.js';
+import RateLimiter from './RateLimiter.js';
+
 config();
+const limiter = new RateLimiter(1000);
 
-export default async function fillInnData(req, res)
+async function fillInnData(req, res)
 {
-    var Location_id = process.env.LOCATION_ID;
-
-    //check last entry datetime in database
-    var from = await latestEntry();
-
-    if (from == null)
-    {
-        try
-        {
-            //if there are no entries, get the datetime of the first measurement the API did (this might give a lot of data)
-            from = await firstMeasurement();
-        } catch (error)
-        {
-            //if an error occurs, set time to one year ago
-            const oneYear = new Date();
-            oneYear.setFullYear(oneYear.getFullYear() - 1);
-            const isoDateString = oneYear.toISOString();
-            from = isoDateString;
-            console.log("This request could not be handled, trying to get 1 year of data");
-        }
-    }
-    let config =
-    {
-        method: 'get',
-        maxBodyLength: Infinity,
-        url: 'https://api.openaq.org/v2/measurements?format=Json&date_from=' + from + '&date_to=' + LatestFullHour() + '&limit=100&page=1&offset=0&sort=desc&location_id=' + Location_id + '&order_by=datetime',
-        headers:
-        {
-            'Accept': 'application/json'
-        }
-    };
-
+    const parameters = ['pm10', 'pm25', 'no2'];
+    const dataStorage = {};
+    const pool = await connectToDatabase();
+    let fromTime = await latestEntry(pool);
+    fromTime = fromTime || new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString();
     try
     {
-        const response = await axios.request(config);
-        console.log(response.data);
-        res.send(response.data);
-    }
-    catch (error)
+        for (const parameter of parameters)
+        {
+            console.log(`Starting fetch for ${parameter}`);
+            dataStorage[parameter] = await fetchDataForParameter(parameter, fromTime, limiter, pool);
+            console.log(`Completed fetch for ${parameter}`);
+            if (dataStorage[parameter] && dataStorage[parameter].length)
+            {
+                insertMeasurements(parameter, dataStorage[parameter], pool);
+            }
+        }
+        console.log('Data fetching complete for all parameters.');
+        fs.writeFileSync('dataStorage.json', JSON.stringify(dataStorage, null, 4), 'utf-8');
+        res.status(200).send('Data fetching and preparation complete for all parameters. Data has been saved to dataStorage.json.');
+    } catch (error)
     {
-        console.log(error);
-        res.status(500).send('Internal Server Error');
+        console.error('Failed to fetch data:', error);
+        res.status(500).send('Error fetching data');
     }
 }
+
+
+export default fillInnData;

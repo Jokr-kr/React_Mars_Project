@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 //Database
-import { initialize } from './src/API/initialize.js';
+import { initialize } from './src/DB/initialize.js';
 initialize();
 
 //API
