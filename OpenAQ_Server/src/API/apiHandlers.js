@@ -1,7 +1,7 @@
 import axios from 'axios';
 import LatestFullHour from '../Utility/LatestHour.js';
 
-export async function fetchMeasurements(apiParams, attempts = 1)
+export async function GetMeasurements(apiParams, attempts = 1)
 {
     try
     {
@@ -18,13 +18,13 @@ export async function fetchMeasurements(apiParams, attempts = 1)
             const retryAfter = error.response.headers['retry-after'] ? parseInt(error.response.headers['retry-after']) : 5 * Math.pow(2, attempts);
             console.log(`Rate limit exceeded, retrying after ${retryAfter} seconds.`);
             await new Promise(resolve => setTimeout(resolve, retryAfter * 1000));
-            return fetchMeasurements(apiParams, attempts + 1);
+            return GetMeasurements(apiParams, attempts + 1);
         }
         throw error;
     }
 }
 
-export async function fetchDataForParameter(parameter, fromTime, rateLimiter, pool)
+export async function fetchData(parameter, fromTime, rateLimiter, pool)
 {
     const Location_id = process.env.LOCATION_ID;
     const ToTime = LatestFullHour();
@@ -48,7 +48,7 @@ export async function fetchDataForParameter(parameter, fromTime, rateLimiter, po
         };
         try
         {
-            const data = await rateLimiter.add(() => fetchMeasurements(apiParams));
+            const data = await rateLimiter.add(() => GetMeasurements(apiParams));
             if (data && data.results.length > 0)
             {
                 results.push(...data.results);

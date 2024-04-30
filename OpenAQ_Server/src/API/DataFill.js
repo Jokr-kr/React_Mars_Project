@@ -1,7 +1,6 @@
-import fs from 'fs';
 import { config } from 'dotenv';
 import { insertMeasurements, connectToDatabase, latestEntry } from '../DB/dataInsert.js'
-import { fetchDataForParameter } from './apiHandlers.js';
+import { fetchData } from './apiHandlers.js';
 import RateLimiter from './RateLimiter.js';
 
 config();
@@ -19,7 +18,7 @@ async function fillInnData(req, res)
         for (const parameter of parameters)
         {
             console.log(`Starting fetch for ${parameter}`);
-            dataStorage[parameter] = await fetchDataForParameter(parameter, fromTime, limiter, pool);
+            dataStorage[parameter] = await fetchData(parameter, fromTime, limiter, pool);
             console.log(`Completed fetch for ${parameter}`);
             if (dataStorage[parameter] && dataStorage[parameter].length)
             {
@@ -27,7 +26,6 @@ async function fillInnData(req, res)
             }
         }
         console.log('Data fetching complete for all parameters.');
-        fs.writeFileSync('dataStorage.json', JSON.stringify(dataStorage, null, 4), 'utf-8');
         res.status(200).send('Data fetching and preparation complete for all parameters. Data has been saved to dataStorage.json.');
     } catch (error)
     {

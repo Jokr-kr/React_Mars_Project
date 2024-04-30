@@ -1,25 +1,25 @@
-export default class RateLimiter
+function RateLimiter(rateLimit)
 {
-    constructor(rateLimit)
-    {
-        this.rateLimit = rateLimit;
-        this.lastRequestTime = Date.now();
-    }
+    let lastRequestTime = Date.now();
 
-    delay(time)
+    function delay(time)
     {
         return new Promise(resolve => setTimeout(resolve, time));
     }
 
-    async add(requestFunc)
+    async function add(requestFunc)
     {
         const now = Date.now();
-        const timeSinceLastRequest = now - this.lastRequestTime;
-        if (timeSinceLastRequest < this.rateLimit)
+        const timeSinceLastRequest = now - lastRequestTime;
+        if (timeSinceLastRequest < rateLimit)
         {
-            await this.delay(this.rateLimit - timeSinceLastRequest);
+            await delay(rateLimit - timeSinceLastRequest);
         }
-        this.lastRequestTime = Date.now();
+        lastRequestTime = Date.now();
         return requestFunc();
     }
+
+    return { add };
 }
+
+export default RateLimiter;
