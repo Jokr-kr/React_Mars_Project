@@ -1,6 +1,7 @@
 import connectToDatabase from './Connect.js';
 import latestEntry from './latestEntry.js';
 
+//takes the parameter and inserts or updates the rigth place in the database
 export async function insertMeasurements(parameter, measurements, pool)
 {
     const sql = `INSERT INTO measurements (datetime, location_id, ${parameter}, unit)

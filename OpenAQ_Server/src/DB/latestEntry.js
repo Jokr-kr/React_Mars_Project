@@ -3,6 +3,7 @@ export default async function latestEntry(pool)
     let datetime = null;
     try
     {
+        //looks for the latest datetime in database
         const connection = await pool.getConnection();
         const [rows] = await connection.query(`
             SELECT DATE_FORMAT(datetime, '%Y-%m-%d %H:%i:%s') AS latestDatetime

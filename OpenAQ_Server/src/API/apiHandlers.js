@@ -1,8 +1,58 @@
 import axios from 'axios';
 import LatestFullHour from '../Utility/LatestHour.js';
 
+export async function fetchData(parameter, fromTime, rateLimiter, pool)
+{
+    //setting the variables needed for the API request
+    const Location_id = process.env.LOCATION_ID;
+    const ToTime = LatestFullHour();
+    let currentPage = 1;
+    const limit = 3000;
+    let results = [];
+    let attempts = 0;
+    const maxAttempts = 5;
+
+    //continuing until all data is fetched or error occurs
+    while (true)
+    {
+        console.log(`Fetching page ${currentPage} for ${parameter}`);
+        const apiParams = {
+            format: 'json',
+            date_from: fromTime,
+            date_to: ToTime,
+            limit,
+            page: currentPage,
+            parameter,
+            location_id: Location_id,
+            order_by: 'datetime'
+        };
+        try
+        {
+            const data = await rateLimiter.add(() => GetMeasurements(apiParams));
+            //if there is a response adds it to the response array
+            if (data && data.results.length > 0)
+            {
+                results.push(...data.results);
+                if (data.results.length < limit) break;
+            } else
+            {
+                break;
+            }
+        } catch (error)
+        {
+            console.error(`Error fetching data for ${parameter}: ${error}`);
+            if (++attempts >= maxAttempts) break;
+        }
+        currentPage++;
+    }
+    console.log(`Total records fetched for ${parameter}: ${results.length}`);
+    return results;
+}
+
+
 export async function GetMeasurements(apiParams, attempts = 1)
 {
+    //tries sending the api request or retries if error occurs
     try
     {
         const response = await axios.get('https://api.openaq.org/v2/measurements', {
@@ -22,48 +72,4 @@ export async function GetMeasurements(apiParams, attempts = 1)
         }
         throw error;
     }
-}
-
-export async function fetchData(parameter, fromTime, rateLimiter, pool)
-{
-    const Location_id = process.env.LOCATION_ID;
-    const ToTime = LatestFullHour();
-    let currentPage = 1;
-    const limit = 3000;
-    let results = [];
-    let attempts = 0;
-    const maxAttempts = 5;
-    while (true)
-    {
-        console.log(`Fetching page ${currentPage} for ${parameter}`);
-        const apiParams = {
-            format: 'json',
-            date_from: fromTime,
-            date_to: ToTime,
-            limit,
-            page: currentPage,
-            parameter,
-            location_id: Location_id,
-            order_by: 'datetime'
-        };
-        try
-        {
-            const data = await rateLimiter.add(() => GetMeasurements(apiParams));
-            if (data && data.results.length > 0)
-            {
-                results.push(...data.results);
-                if (data.results.length < limit) break;
-            } else
-            {
-                break;
-            }
-        } catch (error)
-        {
-            console.error(`Error fetching data for ${parameter}: ${error}`);
-            if (++attempts >= maxAttempts) break;
-        }
-        currentPage++;
-    }
-    console.log(`Total records fetched for ${parameter}: ${results.length}`);
-    return results;
 }
