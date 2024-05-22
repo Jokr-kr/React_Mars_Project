@@ -11,13 +11,26 @@ const route = (app) =>
             fillInnData(req, res);
         })
 
-        .get((req, res) =>
+        .get(async (req, res) =>
         {
-            /*
-            sends data from the database to client
-            */
-            res.send("currently nothing to get")
-        })
+            const { parameter, from, to } = req.query;
+
+            if (!parameter)
+            {
+                return res.status(400).send('Measurement parameter is required');
+            }
+
+            try
+            {
+                const data = await getDataByParameter(parameter, from, to);
+                res.json(data);
+            } catch (error)
+            {
+                console.error('Error fetching data:', error);
+                res.status(500).send('Server error: ' + error.message);
+            }
+        });
+
 
     app.route('/somethingElse')
         .get((req, res) =>

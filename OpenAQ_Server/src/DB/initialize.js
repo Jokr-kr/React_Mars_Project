@@ -1,10 +1,11 @@
-import connect from './Connect.js';
+// initialize.js
+import pool from './Connect.js';
+
 export async function initialize()
 {
-    const connection = await connect();
     try
     {
-        await connection.query(`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS measurements (
                 datetime DATETIME PRIMARY KEY,
                 location_id INT,
@@ -14,13 +15,9 @@ export async function initialize()
                 unit VARCHAR(50)
             );
         `);
-
         console.log("Database and tables initialized successfully.");
     } catch (error)
     {
         console.error("Error during API initialization:", error);
-    } finally
-    {
-        await connection.end();
     }
 }

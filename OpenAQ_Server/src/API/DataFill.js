@@ -1,5 +1,6 @@
 import { config } from 'dotenv';
-import { insertMeasurements, connectToDatabase, latestEntry } from '../DB/dataInsert.js'
+import pool from '../DB/Connect.js';
+import { insertMeasurements, latestEntry } from '../DB/dataInsert.js'
 import { fetchData } from './apiHandlers.js';
 import RateLimiter from './RateLimiter.js';
 
@@ -11,7 +12,6 @@ async function fillInnData(req, res)
     const parameters = ['pm10', 'pm25', 'no2'];
     const dataStorage = {};
     //looks for data in database
-    const pool = await connectToDatabase();
     let fromTime = await latestEntry(pool);
     //if the database is empty set date 1 year back
     fromTime = fromTime || new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString();

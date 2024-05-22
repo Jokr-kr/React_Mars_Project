@@ -13,7 +13,7 @@ export function NamedLabel({ value, className })
 /* ways to use CustomLabel
 
 <CustomLabel value="some text" />
-height, width and fontsize has a default vaule, so they dont have to be included unless change is wanted
+height, width and fontsize has a default vaule, so they dont have to be included unless change is wanted 
 
 ways to use NamedLabel
 
