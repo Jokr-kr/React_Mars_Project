@@ -1,19 +1,17 @@
 import fillInnData from "../API/DataFill.js";
+import { getDataByParameter } from "../Chart_Logic/getData.js";
 const route = (app) =>
 {
     app.route('/Data')
         .put((req, res) =>
         {
-            /*
-            updates the database with the latest data
-            or tries to populate it with a years worth if empty
-            */
             fillInnData(req, res);
         })
-
         .get(async (req, res) =>
         {
             const { parameter, from, to } = req.query;
+
+            console.log('Received parameters:', { parameter, from, to }); // Log the received parameters
 
             if (!parameter)
             {
@@ -23,6 +21,7 @@ const route = (app) =>
             try
             {
                 const data = await getDataByParameter(parameter, from, to);
+                console.log('Data fetched from database:', data); // Log the data
                 res.json(data);
             } catch (error)
             {
@@ -31,17 +30,12 @@ const route = (app) =>
             }
         });
 
-
-    app.route('/somethingElse')
-        .get((req, res) =>
-        {
-            res.send("nothing here")
-        })
-
+    app.route('/something/else')
+        .get((req, res) => { })
         .delete((req, res) =>
         {
-            res.send("not yet implemented")
-        })
+            res.send("not yet implemented");
+        });
 }
-export default route;
 
+export default route;

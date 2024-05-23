@@ -1,14 +1,33 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import { Chart } from 'chart.js';
-import 'chartjs-adapter-date-fns'; // Ensure you have this adapter for date handling in Chart.js
-
-function AirQualityChart()
+import React, { useEffect, useState } from 'react';
+import
 {
-    const [data, setData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import axios from 'axios';
+
+// Register the components
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
+const MyChart = () =>
+{
+    const [chartData, setChartData] = useState({});
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const chartRef = useRef(null);
 
     useEffect(() =>
     {
@@ -16,66 +35,61 @@ function AirQualityChart()
         {
             try
             {
-                const response = await axios.get('/Data?parameter=pm25&from=2021-01-01&to=2021-12-31');
-                setData(response.data);
-                setIsLoading(false);
+                const response = await axios.get('http://localhost:3000/Data', {
+                    params: {
+                        parameter: 'pm25',
+                        from: '2024-01-01',
+                        to: '2024-01-30'
+                    }
+                });
+
+                const data = response.data;
+                // console.log('Data received:', data); // Log the data
+
+                if (data && Array.isArray(data) && data.length > 0)
+                {
+                    const labels = data.map(item => item.datetime);
+                    const values = data.map(item => item.pm25); // Adjust this to match the parameter
+
+                    setChartData({
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'PM2.5 Levels',
+                                data: values,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1,
+                            },
+                        ],
+                    });
+                } else
+                {
+                    console.error('No data received or data is not in expected format');
+                    setError('No data received or data is not in expected format');
+                }
             } catch (error)
             {
-                setError(error);
-                setIsLoading(false);
+                console.error('Error fetching data:', error);
+                setError('Error fetching data');
+            } finally
+            {
+                setLoading(false);
             }
         };
 
         fetchData();
     }, []);
 
-    useEffect(() =>
-    {
-        if (!isLoading && data.length > 0)
-        {
-            buildChart();
-        }
-    }, [data, isLoading]); // Dependency array includes data and isLoading to rebuild chart only when data or loading state changes
-
-    const buildChart = () =>
-    {
-        const chartData = data.map(item => ({
-            x: item.datetime,
-            y: item.pm25
-        }));
-
-        const chart = new Chart(chartRef.current, {
-            type: 'line',
-            data: {
-                datasets: [{
-                    label: 'PM2.5 Levels',
-                    data: chartData,
-                    fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1
-                }]
-            },
-            options: {
-                scales: {
-                    x: {
-                        type: 'time',
-                        time: {
-                            unit: 'day'
-                        }
-                    }
-                }
-            }
-        });
-    };
-
-    if (isLoading) return <p>Loading...</p>;
-    if (error) return <p>Error loading data: {error.message}</p>;
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div>
-            <canvas ref={chartRef} />
+            <h2>Air Quality Data</h2>
+            <Line data={chartData} />
         </div>
     );
-}
+};
 
-export default AirQualityChart;
+export default MyChart;

@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Showimage from './components/showImage';
-import { CustomLabel, NamedLabel } from './components/Label';
+import MyChart from './components/Chart.js';
 function Test()
 {
   return (
@@ -20,9 +19,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Test />
-    <Showimage />
-    <CustomLabel value="Custom Label test 1" />
-    <CustomLabel value="Custom Label test 2" height='120px' width='120px' fontSize='xx-large' />
-    <NamedLabel value="Named Label test" className="standard" />
+    <MyChart />
   </React.StrictMode>
 );

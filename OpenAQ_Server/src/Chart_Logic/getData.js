@@ -1,4 +1,4 @@
-import pool from '../DB/Connect.js'
+import pool from '../DB/Connect.js';
 
 async function getDataByParameter(parameter, fromDate, toDate)
 {
@@ -15,7 +15,8 @@ async function getDataByParameter(parameter, fromDate, toDate)
         SELECT datetime, ${parameter}, location_id
         FROM measurements
         WHERE datetime BETWEEN ? AND ?
-        ORDER BY datetime ASC;`;
+        ORDER BY datetime ASC;
+    `;
 
     try
     {
