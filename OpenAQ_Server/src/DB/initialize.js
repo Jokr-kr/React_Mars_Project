@@ -1,4 +1,3 @@
-// initialize.js
 import pool from './Connect.js';
 
 export async function initialize()

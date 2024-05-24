@@ -11,7 +11,6 @@ async function getDataRoute(req, res)
     try
     {
         const data = await getDataByParameter(parameter, from, to);
-        console.log('Data fetched from database:', data); // Log the data
         res.json(data);
     } catch (error)
     {

@@ -9,11 +9,11 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 
 //Database
-import { initialize } from './src/DB/initialize.js';
+import { initialize } from './DB/initialize.js';
 initialize();
 
 //endpoints
-import routes from './src/Routes/Routes.js';
+import routes from './Routes/Routes.js';
 routes(app);
 
 app.get('/', (req, res) => { res.send('server running'); });
