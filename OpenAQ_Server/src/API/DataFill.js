@@ -39,4 +39,4 @@ async function fillInnData(req, res)
 }
 
 
-export default fillInnData;
+export { fillInnData };

@@ -18,3 +18,8 @@ Label.standard {
   padding: 20px;
   font-size: larger;
 }
+
+.chartbody {
+  max-width: 800px;
+
+}

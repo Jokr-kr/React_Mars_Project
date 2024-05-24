@@ -16,14 +16,11 @@ initialize();
 import routes from './src/Routes/Routes.js';
 routes(app);
 
-app.get('/', (req, res) =>
-{
-    res.send('this is a placeholder');
-});
+app.get('/', (req, res) => { res.send('server running'); });
 
 app.listen(port, () =>
 {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on http://${process.env.HOST}:${port}`);
 });
 
 
