@@ -33,7 +33,7 @@ const useFetchData = () =>
                 const data = response.data;
                 if (data && Array.isArray(data) && data.length > 0)
                 {
-                    const labels = data.map((item) => item.datetime);
+                    const labels = data.map((item) => new Date(item.datetime).toISOString()); // Ensure proper date format
                     const values = data.map((item) => item[param]);
                     labels.forEach(label => allLabels.add(label));
 

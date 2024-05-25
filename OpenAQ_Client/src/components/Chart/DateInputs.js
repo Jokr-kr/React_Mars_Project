@@ -20,8 +20,8 @@ const DateInputs = ({ fromDateTime, toDateTime, setFromDateTime, setToDateTime, 
         });
     };
 
-    const renderTimeOptions = () =>
-    {
+    const renderTimeOptions = () =>  //all data is stored in full hours.
+    {                                //since minutes are redundant i added this                              
         const options = [];
         for (let i = 0; i < 24; i++)
         {
@@ -31,7 +31,7 @@ const DateInputs = ({ fromDateTime, toDateTime, setFromDateTime, setToDateTime, 
         return options;
     };
 
-    const inputStyle = {
+    const inputStyle = {    //simple attempt to make the date and the hour inputs to be the same size
         height: '20px',
         fontSize: '14px',
     };
@@ -40,15 +40,15 @@ const DateInputs = ({ fromDateTime, toDateTime, setFromDateTime, setToDateTime, 
         <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
             <label style={{ display: 'flex', flexDirection: 'column' }}>
                 From:
-                <input
-                    type="date"
-                    value={fromDateTime.split('T')[0]}
-                    onChange={handleDateChange(setFromDateTime, 'date')}
+                <input                                                   //                                                        v
+                    type="date"                                          //as a remind in aer toDateTime is formatted as YYYY-MM-DDTHH:MM
+                    value={fromDateTime.split('T')[0]}                   //fromDateTime.split('T') takes the above datetime and splits it to an array
+                    onChange={handleDateChange(setFromDateTime, 'date')} // [0] is YYYY-MM-DD
                     style={inputStyle}
                 />
                 <select
                     value={fromDateTime.split('T')[1]}
-                    onChange={handleDateChange(setFromDateTime, 'time')}
+                    onChange={handleDateChange(setFromDateTime, 'time')} //[1] is HH:MM
                     style={inputStyle}
                 >
                     {renderTimeOptions()}
@@ -59,12 +59,12 @@ const DateInputs = ({ fromDateTime, toDateTime, setFromDateTime, setToDateTime, 
                 <input
                     type="date"
                     value={toDateTime.split('T')[0]}
-                    onChange={handleDateChange(setToDateTime, 'date')}
+                    onChange={handleDateChange(setToDateTime, 'date')} //same as above [0] refeer to YYYY-MM-DD from YYYY-MM-DDTHH:MM
                     style={inputStyle}
                 />
                 <select
                     value={toDateTime.split('T')[1]}
-                    onChange={handleDateChange(setToDateTime, 'time')}
+                    onChange={handleDateChange(setToDateTime, 'time')} //as abover [1] refeer to HH:MM from YYYY-MM-DDTHH:MM
                     style={inputStyle}
                 >
                     {renderTimeOptions()}

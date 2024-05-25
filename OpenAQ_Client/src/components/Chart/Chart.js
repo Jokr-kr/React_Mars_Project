@@ -59,17 +59,38 @@ const MyChart = () =>
             x: {
                 type: 'time',
                 time: {
-                    unit: 'day',
-                    tooltipFormat: 'MM/dd/yyyy',
+                    unit: 'day', // Change this to 'hour' or 'minute' if needed
+                    tooltipFormat: 'MM/dd/yyyy HH:mm',
                     displayFormats: {
                         day: 'MM/dd/yyyy',
+                        hour: 'HH:mm',
                     },
                 },
                 ticks: {
-                    maxTicksLimit: 10
-                }
-            }
-        }
+                    maxTicksLimit: 10,
+                    autoSkip: true,
+                },
+                title: {
+                    display: true,
+                    text: 'Date',
+                },
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Values',
+                },
+            },
+        },
+        plugins: {
+            legend: {
+                display: true,
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false,
+            },
+        },
     };
 
     return (
