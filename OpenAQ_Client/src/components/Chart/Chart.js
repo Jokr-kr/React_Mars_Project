@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, TimeScale } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
@@ -6,7 +6,7 @@ import DateInputs from './DateInputs.js';
 import Loading from '../Utility/Loading.js';
 import ErrorMessage from '../Utility/ErrorMessage.js';
 import useFetchData from '../../hooks/useFetchData.js';
-
+import './Chart.css';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, TimeScale);
 
 const parameters = ['pm25', 'pm10', 'no2'];
@@ -20,23 +20,14 @@ const MyChart = () =>
 
     const [inputFromDateTime, setInputFromDateTime] = useState(last24Hours.toISOString().slice(0, -8));
     const [inputToDateTime, setInputToDateTime] = useState(now.toISOString().slice(0, -8));
-    const [fromDateTime, setFromDateTime] = useState(last24Hours.toISOString().slice(0, -8));
-    const [toDateTime, setToDateTime] = useState(now.toISOString().slice(0, -8));
     const [selectedParameters, setSelectedParameters] = useState(parameters);
 
     const { chartData, loading, error, fetchData: originalFetchData } = useFetchData();
 
     const fetchData = useCallback(() =>
     {
-        originalFetchData(fromDateTime, toDateTime, selectedParameters);
-    }, [fromDateTime, toDateTime, selectedParameters, originalFetchData]);
-
-    const handleRenderChart = () =>
-    {
-        setFromDateTime(inputFromDateTime);
-        setToDateTime(inputToDateTime);
-        fetchData();
-    };
+        originalFetchData(inputFromDateTime, inputToDateTime, selectedParameters);
+    }, [inputFromDateTime, inputToDateTime, selectedParameters, originalFetchData]);
 
     const handleParameterChange = (param) =>
     {
@@ -52,7 +43,7 @@ const MyChart = () =>
         fetchData();
     }, [fetchData]);
 
-    const options = {
+    const options = useMemo(() => ({
         responsive: true,
         maintainAspectRatio: false,
         scales: {
@@ -91,12 +82,12 @@ const MyChart = () =>
                 intersect: false,
             },
         },
-    };
+    }), []);
 
     return (
-        <div style={{ width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div className="chart-container">
             <h2>Air Quality Data</h2>
-            <div>
+            <div className="parameter-selector">
                 {parameters.map(param => (
                     <label key={param}>
                         <input
@@ -113,14 +104,14 @@ const MyChart = () =>
                 toDateTime={inputToDateTime}
                 setFromDateTime={setInputFromDateTime}
                 setToDateTime={setInputToDateTime}
-                onRenderChart={handleRenderChart}
+                onRenderChart={fetchData}
             />
             {loading ? (
                 <Loading />
             ) : error ? (
                 <ErrorMessage message={error} />
             ) : (
-                <div style={{ width: '80vw', height: '500px' }}>
+                <div className="chart-wrapper">
                     <Line data={chartData} options={options} />
                 </div>
             )}

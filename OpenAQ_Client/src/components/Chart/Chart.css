@@ -1,0 +1,33 @@
+.chart-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.parameter-selector {
+    margin-bottom: 20px;
+}
+
+.chart-wrapper {
+    width: 80vw;
+    height: 500px;
+}
+
+.date-inputs-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.date-input-label {
+    display: flex;
+    flex-direction: column;
+}
+
+.date-input,
+.render-button {
+    height: 20px;
+    font-size: 14px;
+}

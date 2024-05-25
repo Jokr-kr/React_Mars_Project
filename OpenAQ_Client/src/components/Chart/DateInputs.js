@@ -1,4 +1,5 @@
 import React from 'react';
+import './Chart.css';
 
 const DateInputs = ({ fromDateTime, toDateTime, setFromDateTime, setToDateTime, onRenderChart }) =>
 {
@@ -20,8 +21,8 @@ const DateInputs = ({ fromDateTime, toDateTime, setFromDateTime, setToDateTime, 
         });
     };
 
-    const renderTimeOptions = () =>  //all data is stored in full hours.
-    {                                //since minutes are redundant i added this                              
+    const renderTimeOptions = () =>     //all data is stored in full hours.
+    {                                   //since minutes are redundant i added this    
         const options = [];
         for (let i = 0; i < 24; i++)
         {
@@ -31,46 +32,41 @@ const DateInputs = ({ fromDateTime, toDateTime, setFromDateTime, setToDateTime, 
         return options;
     };
 
-    const inputStyle = {    //simple attempt to make the date and the hour inputs to be the same size
-        height: '20px',
-        fontSize: '14px',
-    };
-
     return (
-        <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-            <label style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className="date-inputs-container">
+            <label className="date-input-label">
                 From:
-                <input                                                   //                                                        v
-                    type="date"                                          //as a remind in aer toDateTime is formatted as YYYY-MM-DDTHH:MM
-                    value={fromDateTime.split('T')[0]}                   //fromDateTime.split('T') takes the above datetime and splits it to an array
-                    onChange={handleDateChange(setFromDateTime, 'date')} // [0] is YYYY-MM-DD
-                    style={inputStyle}
+                <input                                                      //as a remind in aer toDateTime is formatted as YYYY-MM-DDTHH:MM
+                    type="date"                                             //fromDateTime.split('T') takes the above datetime and splits it to an array
+                    value={fromDateTime.split('T')[0]}                      // [0] is YYYY-MM-DD
+                    onChange={handleDateChange(setFromDateTime, 'date')}
+                    className="date-input"
                 />
                 <select
-                    value={fromDateTime.split('T')[1]}
-                    onChange={handleDateChange(setFromDateTime, 'time')} //[1] is HH:MM
-                    style={inputStyle}
+                    value={fromDateTime.split('T')[1]}                      //[1] is HH:MM
+                    onChange={handleDateChange(setFromDateTime, 'time')}
+                    className="date-input"
                 >
                     {renderTimeOptions()}
                 </select>
             </label>
-            <label style={{ display: 'flex', flexDirection: 'column' }}>
+            <label className="date-input-label">
                 To:
                 <input
                     type="date"
-                    value={toDateTime.split('T')[0]}
-                    onChange={handleDateChange(setToDateTime, 'date')} //same as above [0] refeer to YYYY-MM-DD from YYYY-MM-DDTHH:MM
-                    style={inputStyle}
+                    value={toDateTime.split('T')[0]}                        // as above [0] refeer to YYYY-MM-DD from YYYY-MM-DDTHH:MM
+                    onChange={handleDateChange(setToDateTime, 'date')}
+                    className="date-input"
                 />
                 <select
-                    value={toDateTime.split('T')[1]}
-                    onChange={handleDateChange(setToDateTime, 'time')} //as abover [1] refeer to HH:MM from YYYY-MM-DDTHH:MM
-                    style={inputStyle}
+                    value={toDateTime.split('T')[1]}                        //as abover [1] refeer to HH:MM from YYYY-MM-DDTHH:MM
+                    onChange={handleDateChange(setToDateTime, 'time')}
+                    className="date-input"
                 >
                     {renderTimeOptions()}
                 </select>
             </label>
-            <button onClick={onRenderChart} style={inputStyle}>Render Chart</button>
+            <button onClick={onRenderChart} className="render-button">Render Chart</button>
         </div>
     );
 };
