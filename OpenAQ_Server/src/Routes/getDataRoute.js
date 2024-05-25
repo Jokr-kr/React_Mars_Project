@@ -1,4 +1,5 @@
-import { getDataByParameter } from "../Chart_Logic/getData.js";
+import { getDataByParameter } from '../Chart_Logic/getData.js';
+
 async function getDataRoute(req, res)
 {
     const { parameter, from, to } = req.query;
@@ -10,7 +11,15 @@ async function getDataRoute(req, res)
 
     try
     {
-        const data = await getDataByParameter(parameter, from, to);
+        const parameters = parameter.split(',');
+        let data = [];
+
+        for (const param of parameters)
+        {
+            const paramData = await getDataByParameter(param, from, to);
+            data = data.concat(paramData);
+        }
+
         res.json(data);
     } catch (error)
     {
@@ -18,4 +27,5 @@ async function getDataRoute(req, res)
         res.status(500).send('Server error: ' + error.message);
     }
 }
-export { getDataRoute }
+
+export { getDataRoute };

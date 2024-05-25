@@ -1,5 +1,6 @@
-import { fillInnData } from "../API/DataFill.js";
+import { fillInnData } from "../api/DataFill.js";
 import { getDataRoute } from "./getDataRoute.js";
+
 const route = (app) =>
 {
     app.route('/Data')
@@ -7,7 +8,6 @@ const route = (app) =>
         .get(async (req, res) => { getDataRoute(req, res); });
 
     app.route('/for/later')
-
         .get((req, res) => { })
         .post((req, res) => { })
         .delete((req, res) => { });

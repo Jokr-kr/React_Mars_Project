@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import axios from 'axios';
 
-const useFetchData = (initialFrom, initialTo) =>
+const useFetchData = () =>
 {
     const [chartData, setChartData] = useState({
         labels: [],
@@ -10,43 +10,47 @@ const useFetchData = (initialFrom, initialTo) =>
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const fetchData = async (from, to) =>
+    const fetchData = useCallback(async (from, to, selectedParameters) =>
     {
         setLoading(true);
         setError(null);
+
         try
         {
-            const response = await axios.get('http://localhost:3000/Data', {
-                params: {
-                    parameter: 'pm25',
-                    from: from,
-                    to: to,
-                },
-            });
+            const datasets = [];
+            const allLabels = new Set();
 
-            const data = response.data;
-
-            if (data && Array.isArray(data) && data.length > 0)
+            for (const param of selectedParameters)
             {
-                const labels = data.map((item) => item.datetime);
-                const values = data.map((item) => item.pm25);
-
-                setChartData({
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'PM2.5 Levels',
-                            data: values,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1,
-                        },
-                    ],
+                const response = await axios.get('http://localhost:3000/Data', {
+                    params: {
+                        parameter: param,
+                        from: from,
+                        to: to,
+                    },
                 });
-            } else
-            {
-                setError('No data received or data is not in the expected format');
+
+                const data = response.data;
+                if (data && Array.isArray(data) && data.length > 0)
+                {
+                    const labels = data.map((item) => item.datetime);
+                    const values = data.map((item) => item[param]);
+                    labels.forEach(label => allLabels.add(label));
+
+                    datasets.push({
+                        label: `${param.toUpperCase()} Levels`,
+                        data: values,
+                        backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`,
+                        borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+                        borderWidth: 1,
+                    });
+                }
             }
+
+            setChartData({
+                labels: Array.from(allLabels).sort(),
+                datasets
+            });
         } catch (error)
         {
             setError('Error fetching data');
@@ -54,7 +58,7 @@ const useFetchData = (initialFrom, initialTo) =>
         {
             setLoading(false);
         }
-    };
+    }, []);
 
     return { chartData, loading, error, fetchData };
 };
