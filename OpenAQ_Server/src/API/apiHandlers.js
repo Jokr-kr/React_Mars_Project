@@ -24,6 +24,9 @@ export async function fetchData(parameter, fromTime, rateLimiter)
             location_id: Location_id,
             order_by: 'datetime'
         };
+
+        console.log('API Request Parameters:', apiParams);
+
         try
         {
             const data = await rateLimiter.add(() => GetMeasurements(apiParams));
@@ -38,6 +41,12 @@ export async function fetchData(parameter, fromTime, rateLimiter)
         } catch (error)
         {
             console.error(`Error fetching data for ${parameter}: ${error.message}`);
+            if (error.response)
+            {
+                console.error('Error details:', error.response.data);
+                console.error('Status:', error.response.status);
+                console.error('Headers:', error.response.headers);
+            }
             if (++attempts >= maxAttempts)
             {
                 throw new Error(`Failed to fetch data for ${parameter} after ${maxAttempts} attempts`);

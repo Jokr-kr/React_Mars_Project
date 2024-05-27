@@ -7,9 +7,16 @@ import Loading from '../Utility/Loading.js';
 import ErrorMessage from '../Utility/ErrorMessage.js';
 import useFetchData from '../../hooks/useFetchData.js';
 import './Chart.css';
+
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, TimeScale);
 
-const parameters = ['pm25', 'pm10', 'no2'];
+const parameters = [
+    process.env.REACT_APP_PARAMETER_1,
+    process.env.REACT_APP_PARAMETER_2,
+    process.env.REACT_APP_PARAMETER_3,
+    process.env.REACT_APP_PARAMETER_4,
+    process.env.REACT_APP_PARAMETER_5
+].filter(param => param);
 
 const MyChart = () =>
 {
@@ -43,6 +50,11 @@ const MyChart = () =>
         fetchData();
     }, [fetchData]);
 
+    useEffect(() =>
+    {
+        console.log('Chart Data:', chartData);
+    }, [chartData]);
+
     const options = useMemo(() => ({
         responsive: true,
         maintainAspectRatio: false,
@@ -50,7 +62,7 @@ const MyChart = () =>
             x: {
                 type: 'time',
                 time: {
-                    unit: 'day', // Change this to 'hour' or 'minute' if needed
+                    unit: 'day',
                     tooltipFormat: 'MM/dd/yyyy HH:mm',
                     displayFormats: {
                         day: 'MM/dd/yyyy',

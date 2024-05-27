@@ -18,9 +18,12 @@ async function getDataByParameter(parameter, fromDate, toDate)
         ORDER BY datetime ASC;
     `;
 
+    console.log(`Executing query: ${query} with parameters: [${fromDate}, ${toDate}]`);
+
     try
     {
         const [results] = await pool.query(query, [fromDate, toDate]);
+        console.log(`Query results:`, results);
         return results;
     } catch (error)
     {

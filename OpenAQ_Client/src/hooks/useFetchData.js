@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import axios from 'axios';
 
 const useFetchData = () =>
@@ -9,9 +9,17 @@ const useFetchData = () =>
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const cache = useRef({});
 
     const fetchData = useCallback(async (from, to, selectedParameters) =>
     {
+        const cacheKey = `${from}_${to}_${selectedParameters.join(',')}`;
+        if (cache.current[cacheKey])
+        {
+            setChartData(cache.current[cacheKey]);
+            return;
+        }
+
         setLoading(true);
         setError(null);
 
@@ -22,6 +30,7 @@ const useFetchData = () =>
 
             for (const param of selectedParameters)
             {
+                console.log(`Fetching data for parameter: ${param}`);
                 const response = await axios.get('http://localhost:3000/Data', {
                     params: {
                         parameter: param,
@@ -31,9 +40,11 @@ const useFetchData = () =>
                 });
 
                 const data = response.data;
+                console.log(`API Response for ${param}: `, data); // Log API response
+
                 if (data && Array.isArray(data) && data.length > 0)
                 {
-                    const labels = data.map((item) => new Date(item.datetime).toISOString()); // Ensure proper date format
+                    const labels = data.map((item) => new Date(item.datetime).toISOString());
                     const values = data.map((item) => item[param]);
                     labels.forEach(label => allLabels.add(label));
 
@@ -47,12 +58,18 @@ const useFetchData = () =>
                 }
             }
 
-            setChartData({
+            console.log("Fetched Data: ", datasets); // Add this log
+
+            const newChartData = {
                 labels: Array.from(allLabels).sort(),
                 datasets
-            });
+            };
+
+            cache.current[cacheKey] = newChartData;
+            setChartData(newChartData);
         } catch (error)
         {
+            console.error('Error fetching data:', error); // Log error
             setError('Error fetching data');
         } finally
         {

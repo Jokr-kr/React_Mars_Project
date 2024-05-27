@@ -7,26 +7,30 @@ import RateLimiter from './RateLimiter.js';
 config();
 const limiter = new RateLimiter(1000);
 
+const parameters = [
+    process.env.PARAMETER_1,
+    process.env.PARAMETER_2,
+    process.env.PARAMETER_3,
+    process.env.PARAMETER_4,
+    process.env.PARAMETER_5
+].filter(param => param); // Filter out any empty parameters
+
 async function fillInnData(req, res)
 {
-    const parameters = ['pm10', 'pm25', 'no2'];
     const dataStorage = {};
-    //looks for data in database
     let fromTime = await latestEntry(pool);
-    //if the database is empty set date 1 year back
     fromTime = fromTime || new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString();
+
     try
     {
-        //fetching data one parameter at a time
         for (const parameter of parameters)
         {
             console.log(`Starting fetch for ${parameter}`);
             dataStorage[parameter] = await fetchData(parameter, fromTime, limiter);
             console.log(`Completed fetch for ${parameter}`);
-            //if the response has data its inserted into the database
             if (dataStorage[parameter] && dataStorage[parameter].length)
             {
-                insertMeasurements(parameter, dataStorage[parameter], pool);
+                await insertMeasurements(parameter, dataStorage[parameter], pool);
             }
         }
         console.log('Data fetching complete for all parameters.');
@@ -37,6 +41,5 @@ async function fillInnData(req, res)
         res.status(500).send('Error fetching data');
     }
 }
-
 
 export { fillInnData };
