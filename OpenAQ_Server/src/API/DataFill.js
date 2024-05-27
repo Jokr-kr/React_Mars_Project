@@ -13,7 +13,7 @@ const parameters = [
     process.env.PARAMETER_3,
     process.env.PARAMETER_4,
     process.env.PARAMETER_5
-].filter(param => param); // Filter out any empty parameters
+].filter(param => param);
 
 async function fillInnData(req, res)
 {
