@@ -23,7 +23,7 @@ async function getDataRoute(req, res)
         res.json(data);
     } catch (error)
     {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error.message);
         res.status(500).send('Server error: ' + error.message);
     }
 }

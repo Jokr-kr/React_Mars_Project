@@ -3,7 +3,6 @@ import LatestFullHour from '../Utility/LatestHour.js';
 
 export async function fetchData(parameter, fromTime, rateLimiter)
 {
-    //setting the variables needed for the API request
     const Location_id = process.env.LOCATION_ID;
     const ToTime = LatestFullHour();
     let currentPage = 1;
@@ -12,7 +11,6 @@ export async function fetchData(parameter, fromTime, rateLimiter)
     let attempts = 0;
     const maxAttempts = 5;
 
-    //continuing until all data is fetched or error occurs
     while (true)
     {
         console.log(`Fetching page ${currentPage} for ${parameter}`);
@@ -29,7 +27,6 @@ export async function fetchData(parameter, fromTime, rateLimiter)
         try
         {
             const data = await rateLimiter.add(() => GetMeasurements(apiParams));
-            //if there is a response adds it to the response array
             if (data && data.results.length > 0)
             {
                 results.push(...data.results);
@@ -40,8 +37,11 @@ export async function fetchData(parameter, fromTime, rateLimiter)
             }
         } catch (error)
         {
-            console.error(`Error fetching data for ${parameter}: ${error}`);
-            if (++attempts >= maxAttempts) break;
+            console.error(`Error fetching data for ${parameter}: ${error.message}`);
+            if (++attempts >= maxAttempts)
+            {
+                throw new Error(`Failed to fetch data for ${parameter} after ${maxAttempts} attempts`);
+            }
         }
         currentPage++;
     }
@@ -49,10 +49,8 @@ export async function fetchData(parameter, fromTime, rateLimiter)
     return results;
 }
 
-
 export async function GetMeasurements(apiParams, attempts = 1)
 {
-    //tries sending the api request or retries if error occurs
     try
     {
         const response = await axios.get('https://api.openaq.org/v2/measurements', {
