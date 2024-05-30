@@ -1,7 +1,7 @@
 import { config } from 'dotenv';
 import pool from '../DB/Connect.js';
 import { insertMeasurements, latestEntry } from '../DB/dataInsert.js'
-import { fetchData } from './apiHandlers.js';
+import { fetchData } from '../API/apiHandlers.js';
 import RateLimiter from './RateLimiter.js';
 
 config();

@@ -15,6 +15,7 @@ const route = (app) =>
     app.route('/for/later')
         .get((req, res) => { })
         .post((req, res) => { })
+        .put((req, res) => { })
         .delete((req, res) => { });
 }
 
