@@ -1,0 +1,14 @@
+# KEY=value  is the syntax, no space around = 
+# one key=value pair per line
+# Using uppercase letters for the keys in .env files is a convention
+HOST=127.0.0.1						#your desired host location, comonly used is localhost
+PORT=3000							#your desired port
+MYSQL_USERNAME=your username	    #mysql Username
+MYSQL_PASSWORD=	your password	    #mysql password 
+MYSQL_DATABASE=	your connection		#database connection point
+LOCATION_ID=10592					#this code is the id of the measurement station you want to connect to.
+PARAMETER_1=pm25
+PARAMETER_2=pm10					#program is set up for 5 parameters.
+PARAMETER_3=no2						#change them to whatever your location offers.
+PARAMETER_4=						#they can be blank, but removing or adding will break the program
+PARAMETER_5=						#only way to change this is to make invasive changes in the program

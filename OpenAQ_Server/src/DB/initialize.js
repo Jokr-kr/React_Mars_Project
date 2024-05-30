@@ -5,7 +5,6 @@ config();
 
 export async function initialize()
 {
-
   try
   {
     await pool.query(`
