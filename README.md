@@ -24,9 +24,8 @@ This is a project that intends to get Airquality data and make a graph to show t
 
 ---------------------------------------------------------
 ## API Reference
-Examples the real APIs gets added as i get to them
 
-not yet implemented
+non for the time being
 
 ---------------------------------------------------------
 ## Acknowledgements
